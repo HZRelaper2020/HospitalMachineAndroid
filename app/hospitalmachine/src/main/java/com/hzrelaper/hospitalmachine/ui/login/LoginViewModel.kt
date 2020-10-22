@@ -1,5 +1,7 @@
 package com.hzrelaper.hospitalmachine.ui.login
 
+import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,17 +37,20 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 //        } else {
 //            _loginResult.value = LoginResult(error = R.string.login_failed)
 //        }
-        UserServiceImp().login(username,password,object: Callback<UserEntity?>{
-            override fun onResponse(call: Call<UserEntity?>, response: Response<UserEntity?>) {
-                val name = response.body()?.username
-                var tt = name+""
-                _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName =tt))
+        UserServiceImp().login(username,password,object: Callback<com.hzrelaper.hospitalmachine.data.entity.LoginResult?>{
+            override fun onResponse(call: Call<com.hzrelaper.hospitalmachine.data.entity.LoginResult?>, response: Response<com.hzrelaper.hospitalmachine.data.entity.LoginResult?>) {
+                var loginresult = response.body()
+                if ( loginresult?.result == 0){
+                    _loginResult.value = LoginResult(success = loginresult.data)
+                }else{
+                    _loginResult.value = LoginResult(error = loginresult?.message)
+                }
             }
 
-            override fun onFailure(call: Call<UserEntity?>, t: Throwable) {
-                _loginResult.value = LoginResult(error = R.string.net_error)
+            override fun onFailure(call: Call<com.hzrelaper.hospitalmachine.data.entity.LoginResult?>, t: Throwable) {
+                _loginResult.value = LoginResult(error = "网络错误 "+t.message)
             }
+
 
         })
     }

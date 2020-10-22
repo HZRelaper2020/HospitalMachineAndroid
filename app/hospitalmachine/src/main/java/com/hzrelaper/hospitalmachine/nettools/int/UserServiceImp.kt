@@ -1,5 +1,6 @@
 package com.hzrelaper.hospitalmachine.nettools.int
 
+import com.hzrelaper.hospitalmachine.data.entity.LoginResult
 import com.hzrelaper.hospitalmachine.data.entity.UserEntity
 import com.hzrelaper.hospitalmachine.nettools.ApiClient
 import retrofit2.Callback
@@ -13,7 +14,7 @@ class UserServiceImp {
         return service
     }
 
-    fun login(username:String,pwd:String,callback: Callback<UserEntity?>){
+    fun login(username:String,pwd:String,callback: Callback<LoginResult?>){
         val service = getService()
         var entity = UserEntity()
         entity.username = username

@@ -1,12 +1,13 @@
 package com.hzrelaper.hospitalmachine.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -16,14 +17,20 @@ import android.widget.ProgressBar
 import android.widget.Toast
 
 import com.hzrelaper.hospitalmachine.R
-import com.hzrelaper.hospitalmachine.nettools.NetTool
+import com.hzrelaper.hospitalmachine.data.entity.UserEntity
+import com.hzrelaper.hospitalmachine.data.pref.SharePref
+import com.hzrelaper.hospitalmachine.ui.main.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
 
+    private lateinit var sharepref: SharePref
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharepref = SharePref(this)
 
         setContentView(R.layout.activity_login)
 
@@ -61,11 +68,13 @@ class LoginActivity : AppCompatActivity() {
             }
             setResult(Activity.RESULT_OK)
 
-            //Complete and destroy login activity once successful
-            finish()
+            if (loginResult.success != null) {
+                finish()
+                var intent = Intent(this,HomeActivity::class.java);
+                startActivity(intent)
+            }
         })
 
-//        loginViewModel.login("1234", "")
 
         username.afterTextChanged {
             loginViewModel.loginDataChanged(
@@ -100,18 +109,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
+    private fun updateUiWithUser(model: UserEntity) {
+        var share = SharePref(this)
+        share.setUsername(model.username)
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
+    private fun showLoginFailed(errorString: String) {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }

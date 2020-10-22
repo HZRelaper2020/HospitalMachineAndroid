@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_topics"
+        icon="@drawable/ic_baseline_home_24"
+        title="快问快答" />
+    <tab
+        id="@+id/tab_my"
+        icon="@drawable/ic_baseline_account_circle_24"
+        title="我的" />
+    <tab
+        id="@+id/tab_others"
+        icon="@drawable/ic_baseline_format_list_bulleted_24"
+        title="其它" />
+</tabs>
