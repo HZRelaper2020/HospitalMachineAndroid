@@ -21,4 +21,14 @@ class SharePref(private val context: Context) {
         edit?.putString("username",username)
         edit?.commit()
     }
+
+    fun getUserId(): String? {
+        return preferences?.getString("userid",null)
+    }
+
+    fun setUserId(userid:String?){
+        var edit = preferences?.edit()
+        edit?.putString("userid",userid)
+        edit?.commit()
+    }
 }

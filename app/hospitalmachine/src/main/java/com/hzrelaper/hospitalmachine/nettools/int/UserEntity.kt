@@ -1,4 +1,4 @@
-package com.hzrelaper.hospitalmachine.data.entity
+package com.hzrelaper.hospitalmachine.nettools.int
 
 class LoginResult{
     var result :Int ?=null
@@ -7,6 +7,7 @@ class LoginResult{
 }
 
 class UserEntity {
+    var id :Int? = null
     var action: String? = null
     var username: String? = null
     var password: String? = null

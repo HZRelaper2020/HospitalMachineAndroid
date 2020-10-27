@@ -10,6 +10,7 @@ import com.hzrelaper.hospitalmachine.R
 import com.hzrelaper.hospitalmachine.data.pref.SharePref
 import com.hzrelaper.hospitalmachine.ui.login.LoginActivity
 import com.hzrelaper.hospitalmachine.ui.main.fragment.TopicsFragment
+import com.hzrelaper.hospitalmachine.ui.main.fragment.otherinfo.OtherInfoFragment
 import com.roughike.bottombar.BottomBar
 
 
@@ -24,6 +25,7 @@ class HomeActivity : AppCompatActivity() {
 
         sharepref = SharePref(this)
         setContentView(R.layout.activity_home)
+
 
         if (checkIsNeedLogin())
             return
@@ -45,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun onBottomClick(tabId:Int){
+    fun onBottomClick(tabId: Int){
 //            if (currentTabId != tabId){
         currentTabId = tabId
 
@@ -53,12 +55,18 @@ class HomeActivity : AppCompatActivity() {
         if (tabId == R.id.tab_topics) {
             obj = TopicsFragment()
         }else if (tabId == R.id.tab_my){
-
+            val bundle = Bundle()
+            bundle.putString("userId", sharepref.getUserId())
+            obj = TopicsFragment()
+            (obj as Fragment).arguments = bundle
         }else if (tabId == R.id.tab_others){
-
+            obj = OtherInfoFragment()
         }
 
-        supportFragmentManager.beginTransaction().replace(R.id.framelyout, obj as Fragment).commit()
+        if (obj != null)
+        {
+            supportFragmentManager.beginTransaction().replace(R.id.framelyout, obj as Fragment).commit()
+        }
 //            }
     }
     fun checkUpdate(){

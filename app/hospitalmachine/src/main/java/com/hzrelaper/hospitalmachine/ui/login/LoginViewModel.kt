@@ -1,20 +1,13 @@
 package com.hzrelaper.hospitalmachine.ui.login
 
-import android.app.Activity
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import com.hzrelaper.hospitalmachine.data.LoginRepository
-import com.hzrelaper.hospitalmachine.data.Result
 
 import com.hzrelaper.hospitalmachine.R
-import com.hzrelaper.hospitalmachine.data.entity.UserEntity
-import com.hzrelaper.hospitalmachine.nettools.ApiClient
-import com.hzrelaper.hospitalmachine.nettools.NetTool
 import com.hzrelaper.hospitalmachine.nettools.int.UserServiceImp
-import com.hzrelaper.hospitalmachine.url.StaticUrl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,8 +30,8 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 //        } else {
 //            _loginResult.value = LoginResult(error = R.string.login_failed)
 //        }
-        UserServiceImp().login(username,password,object: Callback<com.hzrelaper.hospitalmachine.data.entity.LoginResult?>{
-            override fun onResponse(call: Call<com.hzrelaper.hospitalmachine.data.entity.LoginResult?>, response: Response<com.hzrelaper.hospitalmachine.data.entity.LoginResult?>) {
+        UserServiceImp().login(username,password,object: Callback<com.hzrelaper.hospitalmachine.nettools.int.LoginResult?>{
+            override fun onResponse(call: Call<com.hzrelaper.hospitalmachine.nettools.int.LoginResult?>, response: Response<com.hzrelaper.hospitalmachine.nettools.int.LoginResult?>) {
                 var loginresult = response.body()
                 if ( loginresult?.result == 0){
                     _loginResult.value = LoginResult(success = loginresult.data)
@@ -47,7 +40,7 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
                 }
             }
 
-            override fun onFailure(call: Call<com.hzrelaper.hospitalmachine.data.entity.LoginResult?>, t: Throwable) {
+            override fun onFailure(call: Call<com.hzrelaper.hospitalmachine.nettools.int.LoginResult?>, t: Throwable) {
                 _loginResult.value = LoginResult(error = "网络错误 "+t.message)
             }
 

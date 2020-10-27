@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -17,7 +16,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 
 import com.hzrelaper.hospitalmachine.R
-import com.hzrelaper.hospitalmachine.data.entity.UserEntity
+import com.hzrelaper.hospitalmachine.nettools.int.UserEntity
 import com.hzrelaper.hospitalmachine.data.pref.SharePref
 import com.hzrelaper.hospitalmachine.ui.main.HomeActivity
 
@@ -112,6 +111,7 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUiWithUser(model: UserEntity) {
         var share = SharePref(this)
         share.setUsername(model.username)
+        share.setUserId(model.id.toString())
     }
 
     private fun showLoginFailed(errorString: String) {
