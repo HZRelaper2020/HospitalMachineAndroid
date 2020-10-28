@@ -11,6 +11,7 @@ import com.hzrelaper.hospitalmachine.data.pref.SharePref
 import com.hzrelaper.hospitalmachine.ui.login.LoginActivity
 import com.hzrelaper.hospitalmachine.ui.main.fragment.TopicsFragment
 import com.hzrelaper.hospitalmachine.ui.main.fragment.otherinfo.OtherInfoFragment
+import com.loveplusplus.update.UpdateChecker
 import com.roughike.bottombar.BottomBar
 
 
@@ -26,14 +27,17 @@ class HomeActivity : AppCompatActivity() {
         sharepref = SharePref(this)
         setContentView(R.layout.activity_home)
 
-
         if (checkIsNeedLogin())
             return
 
-        checkUpdate()
+        checkApkUpdate()
 
         setBottomBar()
+    }
 
+    fun checkApkUpdate(){
+//        CheckUpdateTask.
+        UpdateChecker.checkForDialog(this);
     }
 
     fun setBottomBar(){
@@ -69,9 +73,7 @@ class HomeActivity : AppCompatActivity() {
         }
 //            }
     }
-    fun checkUpdate(){
 
-    }
 
     fun checkIsNeedLogin():Boolean{
         var username = sharepref.getUsername()

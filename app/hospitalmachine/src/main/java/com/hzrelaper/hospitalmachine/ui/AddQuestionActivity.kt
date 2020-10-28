@@ -17,8 +17,10 @@ import retrofit2.Response
 
 class AddQuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_question)
+        setTitle("提问题")
     }
 
     fun submitForm(view: View) {

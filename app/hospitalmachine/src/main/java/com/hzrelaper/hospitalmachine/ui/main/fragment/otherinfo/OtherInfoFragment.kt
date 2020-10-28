@@ -12,10 +12,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.hzrelaper.hospitalmachine.R
 import com.hzrelaper.hospitalmachine.nettools.int.SuggestinoServiceImp
 import com.hzrelaper.hospitalmachine.nettools.int.SuggestionResult
 import com.hzrelaper.hospitalmachine.utils.MyUtils
+import com.loveplusplus.update.UpdateChecker
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,8 +55,13 @@ class OtherInfoFragment : Fragment() {
         mContext = this.context!!
         mMainView =inflater.inflate(R.layout.fragment_other_info, container, false)
         // Inflate the layout for this fragment
-        mMainView.findViewById<TextView>(R.id.current_version).text="当前版本 "+MyUtils.getAppVersionName(this.context)
-
+        mMainView.findViewById<TextView>(R.id.current_version).text="当前版本 "+MyUtils.getAppVersionName(this.context)+
+                "  versionCode " + MyUtils.getAppVersionCode(this.context)
+        mMainView.findViewById<Button>(R.id.btn_check_update).setOnClickListener(object :View.OnClickListener{
+            override fun onClick(p0: View?) {
+                UpdateChecker.checkForDialog(mContext);
+            }
+        })
         mMainView.findViewById<Button>(R.id.submit_suggestion).setOnClickListener(object:View.OnClickListener{
             override fun onClick(p0: View?) {
                 val suggestion = mMainView.findViewById<EditText>(R.id.txt_suggestion).text.toString()
@@ -68,14 +75,19 @@ class OtherInfoFragment : Fragment() {
                                         call: Call<SuggestionResult?>,
                                         response: Response<SuggestionResult?>
                                     ) {
-
+                                        var body = response.body()
+                                        if (body?.result == 0){
+                                            AlertDialog.Builder(mContext).setMessage("提交成功").create().show()
+                                        }else{
+                                            AlertDialog.Builder(mContext).setMessage("提交失败" + body?.message).create().show()
+                                        }
                                     }
 
                                     override fun onFailure(
                                         call: Call<SuggestionResult?>,
                                         t: Throwable
                                     ) {
-
+                                        Toast.makeText(mContext,"无法连接服务器",Toast.LENGTH_SHORT).show()
                                     }
                                 })
                             }
