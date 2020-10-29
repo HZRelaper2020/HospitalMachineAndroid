@@ -2,6 +2,7 @@ package com.hzrelaper.hospitalmachine.nettools
 
 import com.google.gson.GsonBuilder
 import com.hzrelaper.hospitalmachine.application.App
+import com.hzrelaper.hospitalmachine.nettools.int.AnswerService
 import com.hzrelaper.hospitalmachine.nettools.int.QuestionService
 import com.hzrelaper.hospitalmachine.nettools.int.SuggestionService
 import com.hzrelaper.hospitalmachine.nettools.int.UserService
@@ -27,6 +28,11 @@ class ApiClient {
 
     fun getSuggestinoService(): SuggestionService {
         val service = getClient().create(SuggestionService::class.java)
+        return service
+    }
+
+    fun getAnswerService(): AnswerService {
+        val service = getClient().create(AnswerService::class.java)
         return service
     }
 

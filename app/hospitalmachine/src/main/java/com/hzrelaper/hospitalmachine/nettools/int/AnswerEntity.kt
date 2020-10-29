@@ -3,19 +3,18 @@ package com.hzrelaper.hospitalmachine.nettools.int
 import java.text.SimpleDateFormat
 import java.util.*
 
-class QuestionEntity{
-    var id :Int?= null
-    var name:String?=null
-    var description:String?=null
-    var authorId:String?=null
-    var authorName:String?=null
-    var status:Int?=null
-    var replys:Int?=null
-    var questionTime:String?=null
+class AnswerEntity{
+    var action="add"
+    var id = 0
+    var questionId= 0
+    var answerBody=""
+    var answerTime=""
+    var username = ""
+    var answerStatus = 0
 
-    fun renderTime():String?{
+    fun renderAnswerTime():String?{
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        var pubtime = dateFormat.parse(questionTime)
+        var pubtime = dateFormat.parse(answerTime)
         return getTimeStr(pubtime,null)
     }
 
@@ -52,33 +51,13 @@ class QuestionEntity{
     }
 }
 
-class QuestionResult {
-    var result: Int? = null
-    var message: String? = null
-    var data: List<QuestionEntity?>? = null
+class AnswerEntityRequest{
+    var action="get"
+    var questionId = 0
 }
 
-class QuestionSingleResult {
-    var result: Int? = null
-    var message: String? = null
-    var data: QuestionEntity? = null
-}
-
-class  QuestionEntityRequest{
-    var action :String?=null
-    var id:Int?= null
-    var answerId = 0
-    var start = 0
-    var length = 0
-    var searchText:String?=null
-    var status =0
-    var userId = 0
-    var requestUserId= 0
-}
-
-class QuestionAddRequest{
-    var action="add"
-    var username:String?=null
-    var title:String?=null
-    var description:String?=null
+class AnswerResult{
+    var result = 0
+    var message = ""
+    var data:List<AnswerEntity>?=null
 }

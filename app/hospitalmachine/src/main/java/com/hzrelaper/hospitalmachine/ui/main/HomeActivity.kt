@@ -7,10 +7,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.hzrelaper.hospitalmachine.R
+import com.hzrelaper.hospitalmachine.application.App
 import com.hzrelaper.hospitalmachine.data.pref.SharePref
 import com.hzrelaper.hospitalmachine.ui.login.LoginActivity
 import com.hzrelaper.hospitalmachine.ui.main.fragment.TopicsFragment
 import com.hzrelaper.hospitalmachine.ui.main.fragment.otherinfo.OtherInfoFragment
+import com.loveplusplus.update.HttpUtils
 import com.loveplusplus.update.UpdateChecker
 import com.roughike.bottombar.BottomBar
 
@@ -20,12 +22,18 @@ class HomeActivity : AppCompatActivity() {
 
     private  var currentTabId= 0
 
+    companion object{
+        var updateChecked:Boolean?=null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        getSupportActionBar()?.hide()
 
         sharepref = SharePref(this)
         setContentView(R.layout.activity_home)
+
+
+        getLatestServerIp()
 
         if (checkIsNeedLogin())
             return
@@ -35,9 +43,22 @@ class HomeActivity : AppCompatActivity() {
         setBottomBar()
     }
 
+    fun getLatestServerIp(){
+        Thread{
+            val serveraddress = HttpUtils.get("http://149.129.58.74/config/yi_bao_machine_server_ip.php")
+            if (!TextUtils.isEmpty(serveraddress)) {
+                App.getInstance().serverAddress = serveraddress
+            }
+        }.start()
+    }
+
     fun checkApkUpdate(){
-//        CheckUpdateTask.
-        UpdateChecker.checkForDialog(this);
+        if (updateChecked == null || updateChecked == false) {
+            updateChecked = true
+            var url = App.getInstance().serverAddress + "/api/update?device=android"
+            UpdateChecker.setUpdateUrl(url);
+            UpdateChecker.checkForDialog(this);
+        }
     }
 
     fun setBottomBar(){

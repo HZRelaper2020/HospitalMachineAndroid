@@ -15,6 +15,7 @@ class NormalAdapterViewAdapter(context: Context?) : BGAAdapterViewAdapter<Questi
     public override fun fillData(viewHolderHelper: BGAViewHolderHelper, position: Int, model: QuestionEntity) {
         viewHolderHelper.setText(R.id.tv_item_normal_id,model.id.toString()).setText(R.id.tv_item_normal_title, model.name).setText(R.id.tv_item_time, model.renderTime())
                 .setText(R.id.tv_item_normal_replys,model.replys.toString()+"回答")
+                .setText(R.id.tv_item_normal_status,model.status.toString())
 //        viewHolderHelper.setTag(R.id.tv_item_normal_item,model)
     }
 }

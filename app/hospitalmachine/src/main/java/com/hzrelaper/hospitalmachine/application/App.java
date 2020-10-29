@@ -1,9 +1,11 @@
 package com.hzrelaper.hospitalmachine.application;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hzrelaper.hospitalmachine.data.pref.SharePref;
 import com.hzrelaper.hospitalmachine.url.StaticUrl;
 
 import retrofit2.Retrofit;
@@ -14,25 +16,45 @@ public class App extends Application {
 
     private Retrofit mEngine;
 
+    private String mServerAddress;
+    private SharePref mSharePref;
+
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+        mSharePref = new SharePref(getApplicationContext());
 
         initRetrofit();
         initXUpdate();
     }
 
-    private void initRetrofit(){
-        if (mEngine == null) {
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
-            mEngine = new Retrofit.Builder()
-                    .baseUrl(StaticUrl.Companion.getBaseUrl())
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
+    public void setServerAddress(String address){
+        if (!TextUtils.isEmpty(address)){
+            mServerAddress = address;
+            mSharePref.setServerAddress(mServerAddress);
         }
+    }
+
+    public String getServerAddress(){
+        if (TextUtils.isEmpty(mServerAddress))
+            return  mSharePref.getServerAddress();
+        return mServerAddress;
+    }
+
+    private void initRetrofit(){
+
+//            if (mEngine == null ) {
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                String serverAddress = mSharePref.getServerAddress();
+                mEngine = new Retrofit.Builder()
+                        .baseUrl(serverAddress)
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
+//            }
+
     }
     public  void initXUpdate(){
 //        XUpdate.get()

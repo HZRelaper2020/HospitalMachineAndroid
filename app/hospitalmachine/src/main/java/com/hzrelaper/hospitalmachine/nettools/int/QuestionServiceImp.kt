@@ -28,4 +28,26 @@ class QuestionServiceImp {
         req.description = description
         getService().addQuestion(req).enqueue(callback)
     }
+
+    fun getSingle(id:Int,callback: Callback<QuestionSingleResult?>){
+        var req = QuestionEntityRequest()
+        req.action = "getSingle"
+        req.id = id;
+        getService().getSingle(req).enqueue(callback)
+    }
+
+    fun closeQuestion(id:Int,callback: Callback<QuestionSingleResult?>){
+        var req = QuestionEntityRequest()
+        req.action = "closeQuestion"
+        req.id = id;
+        getService().closeQuestion(req).enqueue(callback)
+    }
+
+    fun useThisAnswer(questionId: Int, answerId: Int, callback: Callback<QuestionSingleResult?>) {
+        var req = QuestionEntityRequest()
+        req.action = "applyAnswer"
+        req.id = questionId
+        req.answerId = answerId
+        getService().applyThisAnswer(req).enqueue(callback)
+    }
 }

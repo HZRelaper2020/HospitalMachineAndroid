@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.hzrelaper.hospitalmachine.R
+import com.hzrelaper.hospitalmachine.data.pref.SharePref
 import com.hzrelaper.hospitalmachine.nettools.int.SuggestinoServiceImp
 import com.hzrelaper.hospitalmachine.nettools.int.SuggestionResult
 import com.hzrelaper.hospitalmachine.utils.MyUtils
@@ -57,6 +58,7 @@ class OtherInfoFragment : Fragment() {
         // Inflate the layout for this fragment
         mMainView.findViewById<TextView>(R.id.current_version).text="当前版本 "+MyUtils.getAppVersionName(this.context)+
                 "  versionCode " + MyUtils.getAppVersionCode(this.context)
+        mMainView.findViewById<TextView>(R.id.current_server).text="当前服务器 "+ SharePref(mContext).getServerAddress()
         mMainView.findViewById<Button>(R.id.btn_check_update).setOnClickListener(object :View.OnClickListener{
             override fun onClick(p0: View?) {
                 UpdateChecker.checkForDialog(mContext);

@@ -12,6 +12,16 @@ class SharePref(private val context: Context) {
         preferences = context.getSharedPreferences(NAME, MODE)
     }
 
+    fun getServerAddress(): String? {
+        return preferences?.getString("server_address","http://192.168.5.13:8850")
+    }
+
+    fun setServerAddress(serveraddress:String?){
+        val edit = preferences?.edit()
+        edit?.putString("server_address",serveraddress)
+        edit?.apply()
+    }
+
     fun getUsername(): String? {
         return preferences?.getString("username",null)
     }
@@ -19,7 +29,7 @@ class SharePref(private val context: Context) {
     fun setUsername(username:String?){
         var edit = preferences?.edit()
         edit?.putString("username",username)
-        edit?.commit()
+        edit?.apply()
     }
 
     fun getUserId(): String? {
@@ -29,6 +39,6 @@ class SharePref(private val context: Context) {
     fun setUserId(userid:String?){
         var edit = preferences?.edit()
         edit?.putString("userid",userid)
-        edit?.commit()
+        edit?.apply()
     }
 }

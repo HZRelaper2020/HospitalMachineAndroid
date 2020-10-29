@@ -21,6 +21,7 @@ import com.hzrelaper.hospitalmachine.ui.main.fragment.topics.NormalAdapterViewAd
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 
 class TopicsFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
@@ -100,8 +101,8 @@ class TopicsFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
         if (checked){
             when(view.id){
                 R.id.all -> mQuestionStatus = -1
-                R.id.resolved -> mQuestionStatus = 1
-                R.id.not_resolved -> mQuestionStatus = 0
+                R.id.resolved -> mQuestionStatus = 1 // 已解决是1
+                R.id.not_resolved -> mQuestionStatus = 0 // 未解决是 0
             }
             mCurrentPage = 0
             loadPageData()
@@ -118,10 +119,12 @@ class TopicsFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
         mDataLv.adapter = mAdapter
         mDataLv.setOnItemClickListener(object : AdapterView.OnItemClickListener {
             override fun onItemClick(adapterview: AdapterView<*>?, view: View?, p2: Int, p3: Long) {
-                var id = view?.findViewById<TextView>(R.id.tv_item_normal_id)?.text.toString()
-                var intent = Intent()
+                val id = view?.findViewById<TextView>(R.id.tv_item_normal_id)?.text.toString()
+                val status =view?.findViewById<TextView>(R.id.tv_item_normal_status)?.text.toString()
+                val intent = Intent()
                 this@TopicsFragment.context?.let { intent.setClass(it, QuestionDetail::class.java) }
                 intent.putExtra("id", id)
+                intent.putExtra("status",status)
                 startActivity(intent)
             }
         })
@@ -170,7 +173,11 @@ class TopicsFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
             })
     }
     fun toast(msg: String){
-        Toast.makeText(this@TopicsFragment.context, msg, Toast.LENGTH_SHORT).show()
+        try {
+            Toast.makeText(this@TopicsFragment.context, msg, Toast.LENGTH_SHORT).show()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
     override fun onBGARefreshLayoutBeginRefreshing(refreshLayout: BGARefreshLayout?) {
         mRefreshLayout.endRefreshing()

@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
@@ -17,10 +18,17 @@ import retrofit2.Response
 
 class AddQuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_question)
         setTitle("提问题")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            android.R.id.home -> finish()
+        }
+        return true
     }
 
     fun submitForm(view: View) {

@@ -5,6 +5,9 @@ import android.util.Log;
 
 public class UpdateChecker {
 
+    public  static void setUpdateUrl(String url){
+        CheckUpdateTask.url = url;
+    }
 
     public static void checkForDialog(Context context) {
         if (context != null) {

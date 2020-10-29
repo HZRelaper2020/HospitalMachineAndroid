@@ -19,6 +19,7 @@ import com.hzrelaper.hospitalmachine.R
 import com.hzrelaper.hospitalmachine.nettools.int.UserEntity
 import com.hzrelaper.hospitalmachine.data.pref.SharePref
 import com.hzrelaper.hospitalmachine.ui.main.HomeActivity
+import com.loveplusplus.update.UpdateChecker
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkUpdate()
 
         sharepref = SharePref(this)
 
@@ -106,6 +108,10 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
+    }
+
+    private  fun checkUpdate(){
+        UpdateChecker.checkForDialog(this);
     }
 
     private fun updateUiWithUser(model: UserEntity) {

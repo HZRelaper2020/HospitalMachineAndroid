@@ -10,6 +10,10 @@
         android:id="@+id/tv_item_normal_id"
         android:layout_width="0dp"
         android:layout_height="0dp" />
+    <TextView
+        android:id="@+id/tv_item_normal_status"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
 
     <TextView
         android:id="@+id/tv_item_normal_title"

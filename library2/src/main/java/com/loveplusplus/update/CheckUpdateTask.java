@@ -21,14 +21,16 @@ class CheckUpdateTask extends AsyncTask<Void, Void, String> {
     private Context mContext;
     private int mType;
     private boolean mShowProgressDialog;
-    private static final String url = Constants.UPDATE_URL;
+    public static  String url = Constants.UPDATE_URL;
+
+    private  String getUrl(){
+        return  url;
+    }
 
     CheckUpdateTask(Context context, int type, boolean showProgressDialog) {
-
         this.mContext = context;
         this.mType = type;
         this.mShowProgressDialog = showProgressDialog;
-
     }
 
 
@@ -89,6 +91,6 @@ class CheckUpdateTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... args) {
-        return HttpUtils.get(url);
+        return HttpUtils.get(getUrl());
     }
 }
